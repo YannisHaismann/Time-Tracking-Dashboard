@@ -1,5 +1,6 @@
 <script>
 import Card from "./components/Card.vue";
+import CardUser from "./components/CardUser.vue";
 const moment = require('moment') 
 
 export default {
@@ -10,6 +11,7 @@ export default {
   },
   components: {
     Card,
+    CardUser,
   },
   data() {
     return {
@@ -69,7 +71,7 @@ export default {
 
 <template>
   <div>
-    <h1>Hey {{ username }}</h1>
+    <card-user :username="username"></card-user>
     <div :v-if="activities">
       <div v-for="activity in activities" :key="activity">
         <card :activity="activity.name" :hour="activity.hour" />
