@@ -19,13 +19,16 @@ export default {
     }
   },
   methods: {
+    resetActivities(){
+      for(let activity in this.activities){
+        this.activities[activity].hour = 0;
+      }
+    },
     //Get the time spent on activites for this session. Params: Week, Month or Year
     getTimeSpent(when){
       this.axios
         .get("http://127.0.0.1:8000/api/users/" + this.id + "/time_spents")
         .then((response) => {
-          console.log(moment(response.data['hydra:member'][1].Date));
-          console.log(response.data['hydra:member'][1].Date);
           for(let activity of response.data['hydra:member']){
             let actualActivity = this.activities.find(el => {
               if(el.name == activity.Activity.name) return true;
@@ -52,15 +55,19 @@ export default {
         });
     },
     //Get all activities
-    getActivities(){
+    getActivities(when){
       this.axios
         .get("http://127.1.0.0:8000/api/activities")
         .then((response) => {
           for(let activity of response.data['hydra:member']){
             this.activities.push({name: activity.name, hour: 0});
           }
-          this.getTimeSpent("year");
+          this.getTimeSpent(when);
         });
+    },
+    changePeriod(when){
+      this.resetActivities();
+      this.getActivities(when);
     },
   },
   beforeMount() {
@@ -71,7 +78,7 @@ export default {
 
 <template>
   <div>
-    <card-user :username="username"></card-user>
+    <card-user @week="changePeriod('week')" @month="changePeriod('month')" @year="changePeriod('year')" :username="username"></card-user>
     <div :v-if="activities">
       <div v-for="activity in activities" :key="activity">
         <card :activity="activity.name" :hour="activity.hour" />
