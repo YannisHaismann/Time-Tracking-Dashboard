@@ -11,7 +11,8 @@ export default {
 <template>
   <div>
     <h1>{{activity}}</h1>
-    <p>{{hour}}</p>
+    <p><span>{{hour}}</span> hrs</p>
+      <button></button>
   </div>
 </template>
 

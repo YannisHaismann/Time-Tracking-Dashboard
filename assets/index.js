@@ -1,6 +1,7 @@
-import Vue from 'vue/dist/vue.js';
+import Vue from 'vue/dist/vue.js'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import './styles/app.css'
 
 import Main from './vue/Main.vue'
 
